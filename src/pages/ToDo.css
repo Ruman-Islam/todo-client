@@ -1,0 +1,59 @@
+.todo-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.todo-container .wrapper {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.todo-container .section-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+}
+.todo-container .section-header h6 {
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+.todo-container .todo-body {
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.todo-container .input-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.todo-container .input-container button {
+    margin: 10px auto 0;
+    text-align: center;
+}
+
+
+
+@media only screen and (max-width: 576px) {
+    .todo-container .section-header {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .todo-container .wrapper {
+        width: 100%;
+        padding: 0 5px;
+        margin: 0 auto;
+    }
+    .todo-container .input-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+}
