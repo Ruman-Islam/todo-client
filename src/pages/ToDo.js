@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import TodoList from '../components/TodoList';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 
 const ToDo = () => {
     const [user, ,] = useAuthState(auth);
+    const [update, setUpdate] = useState(false)
 
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: 'onTouched'
@@ -37,7 +38,7 @@ const ToDo = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
+                setUpdate(!update);
                 notifySuccess('Todo added!');
             })
     };
@@ -79,7 +80,7 @@ const ToDo = () => {
                         <button type='submit' className="input-group-text" id="basic-addon2">Add todo</button>
                     </form>
                 </div>
-                <TodoList />
+                <TodoList update={update} />
             </div>
         </div>
     );
