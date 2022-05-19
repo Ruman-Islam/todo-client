@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase/firebaseConfig';
 import './ToDo.css';
 import { toast } from 'react-toastify';
+import { signOut } from 'firebase/auth';
 
 const ToDo = () => {
     const [user, ,] = useAuthState(auth);
@@ -51,6 +52,7 @@ const ToDo = () => {
                     <h6>To add a todo, just fill the form below and click in add todo.</h6>
                 </div>
                 <div className='todo-body p-5 bg-light'>
+                    <button onClick={() => signOut(auth)} className='btn btn-success sign-out'>Sign out</button>
                     <div className='border-bottom'>
                         <h6>Create a new todo</h6>
                     </div>
@@ -81,7 +83,7 @@ const ToDo = () => {
                         <button type='submit' className="input-group-text" id="basic-addon2">Add todo</button>
                     </form>
                 </div>
-                <TodoList update={todo} />
+                <TodoList todo={todo} />
             </div>
         </div>
     );

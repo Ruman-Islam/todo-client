@@ -4,14 +4,18 @@ import Login from "./pages/Login";
 import ToDo from "./pages/ToDo";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import PrivateRoute from "./authentication/PrivateRoute";
 
 function App() {
   return (
     <div className="App">
       <div>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/todo" element={<ToDo />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/todo" element={
+            <PrivateRoute>
+              <ToDo />
+            </PrivateRoute>} />
         </Routes>
       </div>
       <ToastContainer />

@@ -23,6 +23,13 @@
 .todo-container .todo-body {
     padding: 10px;
     border-radius: 5px;
+    position: relative;
+}
+
+.todo-container .todo-body .sign-out {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .todo-container .input-container {

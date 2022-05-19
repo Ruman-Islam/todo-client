@@ -1,13 +1,64 @@
 import { useQuery } from 'react-query';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { AiOutlineCloseCircle, AiOutlineCheckCircle } from "react-icons/ai";
 import auth from '../firebase/firebaseConfig';
 import Spinner from './Spinner';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
-const TodoList = ({ update }) => {
+const TodoList = ({ todo }) => {
     const [user, ,] = useAuthState(auth);
+    const [completed, setCompleted] = useState(false)
 
-    const { data, isLoading } = useQuery(['get-todo', user?.email, update], () =>
+    const notifyInfo = (message) => {
+        toast.info(message, {
+            position: toast.POSITION.TOP_CENTER,
+            className: 'text-sm'
+        });
+    }
+
+    const notifyWarning = (message) => {
+        toast.warning(message, {
+            position: toast.POSITION.TOP_CENTER,
+            className: 'text-sm'
+        });
+    }
+
+
+    const { data, isLoading } = useQuery(['get-todo', user?.email, todo, completed], () =>
         fetch(`http://localhost:5000/get-task?email=${user?.email}`).then(res => res.json()))
+
+    const completeTask = id => {
+        fetch(`http://localhost:5000/update-task/${id}`, {
+            method: 'PUT',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    setCompleted(!completed);
+                    notifyInfo('Todo updated!');
+                }
+            })
+    }
+
+    const deleteTask = id => {
+        fetch(`http://localhost:5000/delete-task/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    setCompleted(!completed);
+                    notifyWarning('Todo removed')
+                }
+            });
+    }
 
     if (isLoading) {
         return <Spinner />
@@ -18,7 +69,7 @@ const TodoList = ({ update }) => {
             <div className='border-bottom'>
                 <h6>Todo List</h6>
             </div>
-            <table class="table">
+            <table className="table">
                 {data.length > 0 &&
                     <thead>
                         <tr>
@@ -33,8 +84,19 @@ const TodoList = ({ update }) => {
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td>{todo.title}</td>
-                            <td>{todo.description}</td>
-                            <td></td>
+                            <td>{todo.status ? <strike>{todo.description}</strike> : <span>{todo.description}</span>}</td>
+                            <td>
+                                <span
+                                    onClick={() => completeTask(todo._id)}
+                                    className='text-success' role='button'>
+                                    <AiOutlineCheckCircle />
+                                </span>
+                                <span
+                                    onClick={() => deleteTask(todo._id)}
+                                    className='ms-2 text-danger' role='button'>
+                                    <AiOutlineCloseCircle />
+                                </span>
+                            </td>
                         </tr>)}
                 </tbody>
             </table>
