@@ -30,7 +30,7 @@ const ToDo = () => {
             status: false,
             email: user?.email
         }
-        fetch('http://localhost:5000/post-task', {
+        fetch('https://serene-lowlands-71701.herokuapp.com/post-task', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

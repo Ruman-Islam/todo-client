@@ -26,10 +26,10 @@ const TodoList = ({ todo }) => {
 
 
     const { data, isLoading } = useQuery(['get-todo', user?.email, todo, completed], () =>
-        fetch(`http://localhost:5000/get-task?email=${user?.email}`).then(res => res.json()))
+        fetch(`https://serene-lowlands-71701.herokuapp.com/get-task?email=${user?.email}`).then(res => res.json()))
 
     const completeTask = id => {
-        fetch(`http://localhost:5000/update-task/${id}`, {
+        fetch(`https://serene-lowlands-71701.herokuapp.com/update-task/${id}`, {
             method: 'PUT',
             headers: {
                 'content-type': 'application/json'
@@ -45,7 +45,7 @@ const TodoList = ({ todo }) => {
     }
 
     const deleteTask = id => {
-        fetch(`http://localhost:5000/delete-task/${id}`, {
+        fetch(`https://serene-lowlands-71701.herokuapp.com/delete-task/${id}`, {
             method: 'DELETE',
             headers: {
                 'content-type': 'application/json'
@@ -70,7 +70,7 @@ const TodoList = ({ todo }) => {
                 <h6>Todo List</h6>
             </div>
             <table className="table">
-                {data.length > 0 &&
+                {data?.length > 0 &&
                     <thead>
                         <tr>
                             <th scope="col">#</th>
