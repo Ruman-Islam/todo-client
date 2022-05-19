@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 
 const ToDo = () => {
     const [user, ,] = useAuthState(auth);
-    const [update, setUpdate] = useState(false)
+    const [todo, setTodo] = useState({});
 
-    const { register, handleSubmit, formState: { errors } } = useForm({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({
         mode: 'onTouched'
     });
 
@@ -38,8 +38,9 @@ const ToDo = () => {
         })
             .then(res => res.json())
             .then(data => {
-                setUpdate(!update);
+                setTodo(todo);
                 notifySuccess('Todo added!');
+                reset();
             })
     };
 
@@ -80,7 +81,7 @@ const ToDo = () => {
                         <button type='submit' className="input-group-text" id="basic-addon2">Add todo</button>
                     </form>
                 </div>
-                <TodoList update={update} />
+                <TodoList update={todo} />
             </div>
         </div>
     );

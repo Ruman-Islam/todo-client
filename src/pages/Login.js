@@ -3,6 +3,7 @@ import { GoogleLoginButton } from "react-social-login-buttons";
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 import auth from '../firebase/firebaseConfig';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../components/Spinner';
 
 const Login = () => {
     const [signInWithGoogle, googleUser, loading,] = useSignInWithGoogle(auth);
@@ -15,7 +16,7 @@ const Login = () => {
     }, [googleUser, navigate]);
 
     if (loading) {
-        return <h1 style={{ paddingTop: '300px' }} className='text-center'>Please wait....</h1>
+        return <Spinner />
     }
 
     return (

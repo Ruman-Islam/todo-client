@@ -1,7 +1,7 @@
-import React from 'react';
 import { useQuery } from 'react-query';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase/firebaseConfig';
+import Spinner from './Spinner';
 
 const TodoList = ({ update }) => {
     const [user, ,] = useAuthState(auth);
@@ -10,7 +10,7 @@ const TodoList = ({ update }) => {
         fetch(`http://localhost:5000/get-task?email=${user?.email}`).then(res => res.json()))
 
     if (isLoading) {
-        return <h1 style={{ paddingTop: '300px' }} className='text-center'>Please wait....</h1>
+        return <Spinner />
     }
 
     return (
@@ -18,7 +18,7 @@ const TodoList = ({ update }) => {
             <div className='border-bottom'>
                 <h6>Todo List</h6>
             </div>
-            <table class="table table-striped">
+            <table class="table">
                 {data.length > 0 &&
                     <thead>
                         <tr>
