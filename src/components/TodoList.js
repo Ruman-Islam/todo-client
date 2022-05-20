@@ -88,7 +88,7 @@ const TodoList = ({ todo }) => {
                     {data?.result?.map((todo, index) =>
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
-                            <td>{todo.title}</td>
+                            <td>{todo.status ? <strike>{todo.title}</strike> : <span>{todo.title}</span>}</td>
                             <td>{todo.status ? <strike>{todo.description}</strike> : <span>{todo.description}</span>}</td>
                             <td>
                                 <span
@@ -105,7 +105,8 @@ const TodoList = ({ todo }) => {
                         </tr>)}
                 </tbody>
             </table>
-            <Pagination isLoading={isLoading} pageNumber={pageNumber} setPageNumber={setPageNumber} count={data.count} />
+            {data?.result?.length > 0 &&
+                <Pagination isLoading={isLoading} pageNumber={pageNumber} setPageNumber={setPageNumber} count={data.count} />}
         </div>
     );
 };

@@ -9,9 +9,8 @@
 
 @media only screen and (max-width: 576px) {
     .App{
-        background-position: center;
-        background-size: contain;
-        height: 100vh;
-        width: 100vw;
+        background-position: left top;
+        background-size: auto 100%;
+        height: 150vh;
     }
 }

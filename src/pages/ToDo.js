@@ -49,7 +49,7 @@ const ToDo = () => {
         <div className='todo-container'>
             <div className='wrapper'>
                 <div className='section-header'>
-                    <h6>To add a todo, just fill the form below and click in add todo.</h6>
+                    <h5 className='text-light'>To add a todo, just fill the form below and click in add todo.</h5>
                 </div>
                 <div className='todo-body p-5 bg-light'>
                     <button onClick={() => signOut(auth)} className='btn btn-success sign-out'>Sign out</button>

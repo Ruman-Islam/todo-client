@@ -26,8 +26,8 @@ const Pagination = ({ isLoading, pageNumber, setPageNumber, count }) => {
                             onClick={prevPage}>
                             <AiOutlineDoubleLeft />
                         </button>
-                        { // here making an array for picking sequel of 1, 2, 3
-                            // for maintaining page number dynamically
+                        { //& here making an array from count for picking sequel of 1, 2, 3
+                            //& for maintaining page number dynamically
                             [...Array(count).keys()]
                                 .map(pgNumber =>
                                     <button key={pgNumber}
