@@ -8,7 +8,9 @@ const PrivateRoute = ({ children }) => {
     const [user, loading,] = useAuthState(auth);
 
     if (loading) { // Preventing redirecting to login page //
-        return <Spinner />
+        return <div style={{ paddingTop: '300px' }}>
+            <Spinner />
+        </div>
     }
 
     if (!user) {

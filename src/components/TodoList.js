@@ -5,10 +5,12 @@ import auth from '../firebase/firebaseConfig';
 import Spinner from './Spinner';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Pagination from './Pagination';
 
 const TodoList = ({ todo }) => {
     const [user, ,] = useAuthState(auth);
-    const [completed, setCompleted] = useState(false)
+    const [completed, setCompleted] = useState(false);
+    const [pageNumber, setPageNumber] = useState(0);
 
     const notifyInfo = (message) => {
         toast.info(message, {
@@ -25,8 +27,11 @@ const TodoList = ({ todo }) => {
     }
 
 
-    const { data, isLoading } = useQuery(['get-todo', user?.email, todo, completed], () =>
-        fetch(`https://serene-lowlands-71701.herokuapp.com/get-task?email=${user?.email}`).then(res => res.json()))
+    const { data, isLoading } = useQuery(['get-todo', user?.email, todo, completed, pageNumber], () =>
+        fetch(`https://serene-lowlands-71701.herokuapp.com/get-task?email=${user?.email}&limit=${4}&pageNumber=${pageNumber}`).then(res => {
+            console.log(res);
+            return res.json();
+        }))
 
     const completeTask = id => {
         fetch(`https://serene-lowlands-71701.herokuapp.com/update-task/${id}`, {
@@ -60,17 +65,17 @@ const TodoList = ({ todo }) => {
             });
     }
 
+    console.log(data);
     if (isLoading) {
         return <Spinner />
     }
-
     return (
         <div className='bg-light p-5 rounded mt-3'>
             <div className='border-bottom'>
                 <h6>Todo List</h6>
             </div>
             <table className="table">
-                {data?.length > 0 &&
+                {data?.result?.length > 0 &&
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -80,7 +85,7 @@ const TodoList = ({ todo }) => {
                         </tr>
                     </thead>}
                 <tbody>
-                    {data?.map((todo, index) =>
+                    {data?.result?.map((todo, index) =>
                         <tr key={index}>
                             <th scope="row">{index + 1}</th>
                             <td>{todo.title}</td>
@@ -100,6 +105,7 @@ const TodoList = ({ todo }) => {
                         </tr>)}
                 </tbody>
             </table>
+            <Pagination isLoading={isLoading} pageNumber={pageNumber} setPageNumber={setPageNumber} count={data.count} />
         </div>
     );
 };

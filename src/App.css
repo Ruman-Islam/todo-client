@@ -3,7 +3,15 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-attachment: fixed;
     height: 100vh;
     width: 100vw;
+}
+
+@media only screen and (max-width: 576px) {
+    .App{
+        background-position: center;
+        background-size: contain;
+        height: 100vh;
+        width: 100vw;
+    }
 }

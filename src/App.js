@@ -11,6 +11,7 @@ function App() {
     <div className="App">
       <div>
         <Routes>
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
           <Route path="/todo" element={
             <PrivateRoute>
